@@ -1,0 +1,26 @@
+const int ledPin = 2;  // Pin del LED azul integrado en el ESP32
+
+void setup() {
+  pinMode(ledPin, OUTPUT);  // Configurar el pin del LED como salida
+}
+
+void loop() {
+  // Secuencia de destello rápida para simular la luz de policía
+  
+  // Primer destello
+  digitalWrite(ledPin, HIGH);  // Encender el LED
+  delay(random(50, 150));  // Mantener el LED encendido por un tiempo aleatorio entre 50ms y 150ms
+  
+  digitalWrite(ledPin, LOW);   // Apagar el LED
+  delay(random(50, 150));  // Mantener el LED apagado por un tiempo aleatorio
+  
+  // Segundo destello más largo para simular un efecto de alarma
+  digitalWrite(ledPin, HIGH);  // Encender el LED
+  delay(random(200, 400));  // Mantenerlo encendido por un tiempo aleatorio más largo (200-400ms)
+  
+  digitalWrite(ledPin, LOW);   // Apagar el LED
+  delay(random(200, 400));  // Mantenerlo apagado por un tiempo aleatorio
+
+  // Repetir el patrón varias veces, luego hacer una pausa más larga
+  delay(random(300, 500));  // Pausa aleatoria más larga entre repeticiones
+}
