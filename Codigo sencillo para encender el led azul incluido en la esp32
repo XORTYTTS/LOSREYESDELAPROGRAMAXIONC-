@@ -1,0 +1,17 @@
+// Definir el pin del LED (el ESP32 tiene un LED integrado en el pin 2 por lo general)
+const int ledPin = 2;  // Puedes cambiarlo si usas otro pin
+
+void setup() {
+  // Configurar el pin del LED como salida
+  pinMode(ledPin, OUTPUT);
+}
+
+void loop() {
+  // Encender el LED
+  digitalWrite(ledPin, HIGH);
+  delay(50);  // Tiempo de encendido, 50 milisegundos
+  
+  // Apagar el LED
+  digitalWrite(ledPin, LOW);
+  delay(50);  // Tiempo de apagado, 50 milisegundos
+}
