@@ -1,0 +1,37 @@
+// Definir los pines donde se conectan los LEDs
+int pinRojo = 23;    // LED rojo
+int pinAmarillo = 22; // LED amarillo
+int pinVerde = 21;    // LED verde
+
+void setup() {
+  // Configurar los pines como salida
+  pinMode(pinRojo, OUTPUT);
+  pinMode(pinAmarillo, OUTPUT);
+  pinMode(pinVerde, OUTPUT);
+}
+
+void loop() {
+  // Encender el LED rojo y apagar los demás
+  digitalWrite(pinRojo, HIGH);
+  digitalWrite(pinAmarillo, LOW);
+  digitalWrite(pinVerde, LOW);
+  delay(500); // Mantener el rojo por 500 ms
+  
+  // Encender el LED amarillo y apagar los demás
+  digitalWrite(pinRojo, LOW);
+  digitalWrite(pinAmarillo, HIGH);
+  digitalWrite(pinVerde, LOW);
+  delay(300); // Mantener el amarillo por 300 ms
+
+  // Encender el LED verde y apagar los demás
+  digitalWrite(pinRojo, LOW);
+  digitalWrite(pinAmarillo, LOW);
+  digitalWrite(pinVerde, HIGH);
+  delay(500); // Mantener el verde por 500 ms
+
+  // Encender el LED amarillo (para simular transición) y apagar los demás
+  digitalWrite(pinRojo, LOW);
+  digitalWrite(pinAmarillo, HIGH);
+  digitalWrite(pinVerde, LOW);
+  delay(300); // Mantener el amarillo por 300 ms
+}
