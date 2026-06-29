@@ -1,0 +1,137 @@
+#include <Servo.h>
+
+//--------------- SERVOS ----------------
+Servo servo1;
+Servo servo2;
+Servo servo3;
+Servo servo4;
+
+#define SERVO1 3
+#define SERVO2 5
+#define SERVO3 6
+#define SERVO4 9
+
+
+//--------------- SENSORES ----------------
+#define SENSOR1 A0
+#define SENSOR2 A1
+
+
+void setup()
+{
+  servo1.attach(SERVO1);
+  servo2.attach(SERVO2);
+  servo3.attach(SERVO3);
+  servo4.attach(SERVO4);
+
+
+  pinMode(SENSOR1, INPUT);
+  pinMode(SENSOR2, INPUT);
+
+
+  // inicio rápido y suave
+  delay(200);
+
+  moverTodos(0,90,15);
+}
+
+
+
+void loop()
+{
+
+  moverTodos(90,180,10);
+
+  moverTodos(180,0,10);
+
+  moverTodos(0,90,10);
+
+  delay(500);
+
+}
+
+
+//================================================
+
+void moverTodos(int inicio, int fin, int velocidad)
+{
+
+  if(inicio < fin)
+  {
+
+    for(int pos=inicio; pos<=fin; pos++)
+    {
+
+      if(detectarObstaculo())
+      {
+        detenerTodo();
+
+        while(detectarObstaculo()){}
+      }
+
+
+      servo1.write(pos);
+      servo2.write(pos);
+      servo3.write(pos);
+      servo4.write(pos);
+
+      delay(velocidad);
+    }
+
+  }
+
+
+  else
+  {
+
+    for(int pos=inicio; pos>=fin; pos--)
+    {
+
+      if(detectarObstaculo())
+      {
+        detenerTodo();
+
+        while(detectarObstaculo()){}
+      }
+
+
+      servo1.write(pos);
+      servo2.write(pos);
+      servo3.write(pos);
+      servo4.write(pos);
+
+      delay(velocidad);
+    }
+
+  }
+
+}
+
+
+//================================================
+
+bool detectarObstaculo()
+{
+
+  if(digitalRead(SENSOR1)==HIGH ||
+     digitalRead(SENSOR2)==HIGH)
+  {
+    return true;
+  }
+
+  return false;
+
+}
+
+
+//================================================
+
+void detenerTodo()
+{
+
+  servo1.write(90);
+  servo2.write(90);
+  servo3.write(90);
+  servo4.write(90);
+
+}
