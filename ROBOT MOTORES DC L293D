@@ -1,0 +1,232 @@
+//================= L293D #1 =================
+
+#define M1_IN1 2
+#define M1_IN2 4
+#define M1_EN A1
+
+#define M2_IN1 5
+#define M2_IN2 7
+#define M2_EN A2
+
+
+//================= L293D #2 =================
+
+#define M3_IN1 8
+#define M3_IN2 10
+#define M3_EN A3
+
+#define M4_IN1 12
+#define M4_IN2 13
+#define M4_EN A4
+
+
+//================= L293D #3 =================
+
+#define M5_IN1 A5
+#define M5_IN2 11
+#define M5_EN A6
+
+
+//================ SENSOR =================
+
+#define SENSOR_PIN A0
+
+
+
+void setup()
+{
+
+ Serial.begin(9600);
+
+
+ pinMode(M1_IN1,OUTPUT);
+ pinMode(M1_IN2,OUTPUT);
+ pinMode(M1_EN,OUTPUT);
+
+ pinMode(M2_IN1,OUTPUT);
+ pinMode(M2_IN2,OUTPUT);
+ pinMode(M2_EN,OUTPUT);
+
+ pinMode(M3_IN1,OUTPUT);
+ pinMode(M3_IN2,OUTPUT);
+ pinMode(M3_EN,OUTPUT);
+
+ pinMode(M4_IN1,OUTPUT);
+ pinMode(M4_IN2,OUTPUT);
+ pinMode(M4_EN,OUTPUT);
+
+ pinMode(M5_IN1,OUTPUT);
+ pinMode(M5_IN2,OUTPUT);
+ pinMode(M5_EN,OUTPUT);
+
+
+ pinMode(SENSOR_PIN,INPUT);
+
+
+ apagarTodo();
+
+}
+
+
+
+
+void loop()
+{
+
+
+//============== IDA ==============
+
+
+ mover(M1_IN1,M1_IN2,M1_EN,5000);
+
+ mover(M2_IN1,M2_IN2,M2_EN,6000);
+
+ mover(M3_IN1,M3_IN2,M3_EN,4000);
+
+ mover(M4_IN1,M4_IN2,M4_EN,3000);
+
+ mover(M5_IN1,M5_IN2,M5_EN,2000);
+
+
+
+ delay(1000);
+
+
+
+//============== REGRESO ==============
+
+
+ mover(M5_IN2,M5_IN1,M5_EN,2000);
+
+ mover(M4_IN2,M4_IN1,M4_EN,3000);
+
+ mover(M3_IN2,M3_IN1,M3_EN,4000);
+
+ mover(M2_IN2,M2_IN1,M2_EN,6000);
+
+ mover(M1_IN2,M1_IN1,M1_EN,5000);
+
+
+
+ delay(1000);
+
+}
+
+
+
+
+//================================================
+
+void mover(byte A, byte B, byte EN, int tiempo)
+{
+
+ digitalWrite(A,HIGH);
+ digitalWrite(B,LOW);
+
+ digitalWrite(EN,HIGH);
+
+
+
+ int transcurrido=0;
+ bool sensor=false;
+
+
+
+ for(int i=0;i<tiempo;i+=50)
+ {
+
+   if(digitalRead(SENSOR_PIN)==HIGH)
+   {
+
+    transcurrido=i;
+    sensor=true;
+
+    Serial.println("LIMIT SWITCH ACTIVADO");
+
+    break;
+
+   }
+
+
+   delay(50);
+
+ }
+
+
+
+ if(sensor)
+ {
+
+   digitalWrite(EN,LOW);
+
+   delay(500);
+
+
+
+   digitalWrite(A,LOW);
+   digitalWrite(B,HIGH);
+
+   digitalWrite(EN,HIGH);
+
+
+
+   delay(transcurrido);
+
+
+
+   digitalWrite(A,LOW);
+   digitalWrite(B,LOW);
+
+   digitalWrite(EN,LOW);
+
+
+   Serial.println("Motor regreso");
+
+   return;
+
+ }
+
+
+
+ digitalWrite(A,LOW);
+ digitalWrite(B,LOW);
+ digitalWrite(EN,LOW);
+
+
+
+ delay(300);
+
+}
+
+
+
+
+//================================================
+
+void apagarTodo()
+{
+
+
+digitalWrite(M1_EN,LOW);
+digitalWrite(M2_EN,LOW);
+digitalWrite(M3_EN,LOW);
+digitalWrite(M4_EN,LOW);
+digitalWrite(M5_EN,LOW);
+
+
+digitalWrite(M1_IN1,LOW);
+digitalWrite(M1_IN2,LOW);
+
+digitalWrite(M2_IN1,LOW);
+digitalWrite(M2_IN2,LOW);
+
+digitalWrite(M3_IN1,LOW);
+digitalWrite(M3_IN2,LOW);
+
+digitalWrite(M4_IN1,LOW);
+digitalWrite(M4_IN2,LOW);
+
+digitalWrite(M5_IN1,LOW);
+digitalWrite(M5_IN2,LOW);
+
+}
